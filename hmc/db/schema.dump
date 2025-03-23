@@ -51,6 +51,9 @@ INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, desc
   ( "HDFS", "HDFS", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }', "Apache Hadoop Distributed File System" );
 INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
   ( "MAPREDUCE", "MapReduce", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }', "Apache Hadoop Distributed Processing Framework" );
+
+INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
+  ( "YARN", "YARN", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }', "Apache Hadoop Yarn Framework" );
 INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
   ( "ZOOKEEPER", "ZooKeeper", '{ "runnable": true, "mustInstall": false, "editable": false, "noDisplay": false }', "Centralized Service for Configuration Management and Distribution Synchronization" );
 INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
@@ -67,10 +70,10 @@ INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, desc
   ( "TEMPLETON", "Templeton", '{ "runnable": true, "mustInstall": false, "editable": true, "noDisplay": false }',  "Webservice APIs for Apache Hadoop" );
 INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
   ( "DASHBOARD", "Dashboard", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": true }',  "Monitoring Dashboard for HDP" );
-INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
-  ( "GANGLIA", "Ganglia", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }',  "Ganglia-based Metrics Collection for HDP" );
-INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
-  ( "NAGIOS", "Nagios", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }',  "Nagios-based Monitoring for HDP" );
+-- INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
+--   ( "GANGLIA", "Ganglia", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }',  "Ganglia-based Metrics Collection for HDP" );
+-- INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
+--   ( "NAGIOS", "Nagios", '{ "runnable": true, "mustInstall": true, "editable": false, "noDisplay": false }',  "Nagios-based Monitoring for HDP" );
 INSERT OR REPLACE INTO "Services" ( service_name, display_name, attributes, description ) VALUES
   ( "MISCELLANEOUS", "Miscellaneous", '{ "runnable": false, "mustInstall": true, "editable": false, "noDisplay": true }',  "" );
 

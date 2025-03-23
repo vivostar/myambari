@@ -1,0 +1,6 @@
+[bigtop]
+name=bigtop repo
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
+baseurl=http://172.28.1.10/centos7
+gpgcheck=0
+enabled=1

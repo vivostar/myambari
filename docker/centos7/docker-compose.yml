@@ -1,0 +1,47 @@
+services:
+  master:
+    image: centos:dev-1
+    hostname: master
+    privileged: true
+    command: /sbin/init
+    mem_limit: 4g
+    cgroup: host
+    networks:
+      sparknet:
+        ipv4_address: 172.28.1.10
+    extra_hosts:
+      - "worker01:172.28.1.11"
+      - "worker02:172.28.1.12"
+  worker01:
+    image: centos:dev-1
+    hostname: worker01
+    privileged: true
+    command: /sbin/init
+    mem_limit: 4g
+    cgroup: host
+    networks:
+      sparknet:
+        ipv4_address: 172.28.1.11
+    extra_hosts:
+      - "master:172.28.1.10"
+      - "worker02:172.28.1.12"
+  worker02:
+    image: centos:dev-1
+    hostname: worker02
+    privileged: true
+    command: /sbin/init
+    mem_limit: 4g
+    cgroup: host
+    networks:
+      sparknet:
+        ipv4_address: 172.28.1.12
+    extra_hosts:
+      - "master:172.28.1.10"
+      - "worker01:172.28.1.11"
+networks:
+  sparknet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+   

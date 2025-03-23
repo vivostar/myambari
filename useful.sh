@@ -1,0 +1,1 @@
+/opt/lampp/bin/php hmc/php/frontend/initializeHMC.php /home/peng/Desktop/sulazang/myambari/datas/db/data.db hmc/db/schema.dump

@@ -270,7 +270,7 @@ class SelectNodes {
       $return["error"] = $clusterInfo["error"];
       return $return;
     }
-    $clusterState = json_decode($clusterInfo[state],true);
+    $clusterState = json_decode($clusterInfo["state"],true);
     if($clusterState[state] == "CONFIGURATION_IN_PROGRESS") {
       $hostRolesResult = $db->cleanAllHostRoles($clusterName);
       if ($hostRolesResult["result"] != 0) {

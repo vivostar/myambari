@@ -131,7 +131,7 @@ if ($subTransactionReturnValue["result"] != 0 ) {
 
 $logger->log_debug("sequentialScriptExecutor txnId: $orchestratorTxnId\n");
 
-$startTime = time(0);
+$startTime = time();
 
 $cmd = "";
 $currentStage = "";
@@ -175,7 +175,9 @@ $checkThisHostInDB = $dbHandle->getHostInfo($clusterName, $thisHostName);
 $logger->log_debug("Host Info in DB ".print_r($checkThisHostInDB, true));
 if ($checkThisHostInDB["result"] != 0) {
   $logger->log_info($thisHostName . "not found in DB so adding it to the list of hosts");
-  $hosts = addThisHostToList($hosts, $logger, $thisHostName, $readFromFile);
+
+  // TODO: 这里首先不加本机host进去
+  // $hosts = addThisHostToList($hosts, $logger, $thisHostName, $readFromFile);
 }
 $hosts = convertToLowerCase($hosts);
 

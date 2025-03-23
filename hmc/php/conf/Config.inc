@@ -21,13 +21,13 @@
 */
 
 
-$INSTALL_ROOT = "/usr/share/hmc/";
+$INSTALL_ROOT = "/home/peng/Desktop/sulazang/myambari/hmc";
 
-$GLOBALS["HMC_CLUSTER_PATH"] = "/var/run/hmc/";
+$GLOBALS["HMC_CLUSTER_PATH"] = "/home/peng/Desktop/sulazang/myambari/datas/lock/";
 $GLOBALS["BACKGROUND_EXECUTOR_PATH"] = $INSTALL_ROOT . "/php/util/BackgroundExecutor.php";
-$GLOBALS["PHP_EXEC_PATH"] = "/usr/bin/php";
+$GLOBALS["PHP_EXEC_PATH"] = "/opt/lampp/bin/php";
 $GLOBALS["CLUSTERMAIN_PATH"] = $INSTALL_ROOT . "/php/orchestrator/ClusterMain.php";
-$GLOBALS["DB_PATH"] = "/var/db/hmc/data/data.db";
+$GLOBALS["DB_PATH"] = "/home/peng/Desktop/sulazang/myambari/datas/db/data.db";
 
 $GLOBALS["puppetMaxParallelKicks"] = 10;
 $GLOBALS["puppetMasterModulesDirectory"] = "/etc/puppet/master/modules";
@@ -40,7 +40,7 @@ $GLOBALS["manifestloaderDestinationDir"] = "/etc/puppet/master/manifests";
 $GLOBALS["puppet_install"] = "/usr/share/hmc/ShellScripts/puppet_agent_install.sh";
 $GLOBALS["DRYRUN"] = FALSE;
 
-$GLOBALS["HMC_LOG_DIR"] = "/var/log/hmc";
+$GLOBALS["HMC_LOG_DIR"] = "/home/peng/Desktop/sulazang/myambari/datas/logs";
 $GLOBALS["HMC_LOG_LEVEL"] = HMCLogger::INFO;
 $GLOBALS["HMC_LOG_FILE"] = $GLOBALS["HMC_LOG_DIR"] . "/hmc.log";
 
@@ -48,7 +48,7 @@ $GLOBALS["HMC_LOG_FILE"] = $GLOBALS["HMC_LOG_DIR"] . "/hmc.log";
 // TODO fix - currently for testing only
 $GLOBALS["HMC_LOG_LEVEL"] = HMCLogger::DEBUG;
 $GLOBALS["HMC_LOG_FILE"] = "/tmp/orchestrator-test.log";
-$GLOBALS["HMC_CLUSTER_PATH"] = "/var/run/hmc/";
+$GLOBALS["HMC_CLUSTER_PATH"] = "/home/peng/Desktop/sulazang/myambari/datas/lock/";
 */
 
 /*

@@ -21,7 +21,7 @@
 */
 
 
-
+// 新的设计没有agent,于是这一段首先跳过
 include_once '../util/Logger.php';
 include_once '../conf/Config.inc';
 include_once 'localDirs.php';
@@ -296,96 +296,7 @@ $logger->log_info("Starting signing of puppet agents certs for "
     . count($hosts) . " hosts");
 
 $opStatus = "STARTED";
-$subTransactionReturnValue = $dbAccessor->updateSubTransactionOpStatus($clusterName, $parentSubTxnId, $mySubTxnId, $opStatus);
-if ($subTransactionReturnValue["result"] != 0 ) {
-  $logger->log_error("Got error while updating subTxn: ".$subTransactionReturnValue["error"]);
-  print json_encode($subTransactionReturnValue);
-  return;
-}
-
-// Create progress files for UI to track
-$operationName = "finalizeNodes";
-$clusterDir = getClusterDir($clusterName);
-$myDir = $clusterDir . $operationName . "/";
-if (is_dir($myDir)) {
-  rrmdir($myDir);
-}
-mkdir($myDir);
-foreach ($hosts as $host) {
-  $fileName = $myDir . "/" . $host . ".out";
-  $h = fopen($fileName, "a");
-  if ($h !== FALSE) {
-    fclose($h);
-  }
-}
-
-$result = sign_and_verify_agent ($hosts,$logger);
-$logger->log_debug("Puppet Cert Sign Result:\n".print_r($result, true));
-
-$nodeFileOut = fopen($readFromFile, "w");
-if ($nodeFileOut == FALSE) {
-  $subTransactionReturnValue = $dbAccessor->updateSubTransactionOpStatus($clusterName, $parentSubTxnId, $mySubTxnId, "TOTALFAILURE");
-  $logger->log_error("Got error while trying to rewrite hosts file");
-  return;
-}
-
-$updateHosts = array();
-$failedHosts = 0;
-$successfulHosts = 0;
-foreach ($result as $hostName => $hostInfo) {
-  $fileName = $myDir . "/" . $hostName . ".done";
-  $errFileName = $myDir . "/" . $hostName . ".err";
-  if ($hostInfo["discoveryStatus"] == "FAILED") {
-    $updateHosts[$hostName] = $hostInfo;
-    $errorString = $hostInfo["badHealthReason"];
-    $f = fopen($errFileName, "w");
-    if ($f !== FALSE) {
-      for ($written = 0; $written < strlen($errorString);) {
-        $writtenBytes = fwrite($f, substr($errorString, $written));
-        if ($writtenBytes === FALSE) {
-          $logger->log_error("Failed to write error file for puppet cert sign failure"
-              . ", host=" . $hostName
-              . ", errFile=" . $errFileName
-              . ", error=" . $errorString);
-          break;
-        }
-        $written += $writtenBytes;
-      }
-      fflush($f);
-      fclose($f);
-    } else {
-      $logger->log_error("Failed to write error file for puppet cert sign failure"
-          . ", host=" . $hostName
-          . ", errFile=" . $errFileName
-          . ", error=" . $errorString);
-    }
-    system("echo \"1\" > " . $fileName);
-    $failedHosts++;
-  } else {
-    system("echo \"0\" > " . $fileName);
-    // write the nodename to the readFromFile file.
-    fwrite($nodeFileOut, $hostName."\n");
-    $successfulHosts++;
-  }
-}
-fclose($nodeFileOut);
-
-$logger->log_debug("Updating DB for hosts discovery status for puppet agent cert signing");
-$ret = $dbAccessor->updateHostDiscoveryStatus($clusterName, $updateHosts);
-if ($ret["result"] != 0) {
-  $logger->log_error("Failed to update DB for hosts status, error="
-      . $ret["error"]);
-  // TODO - handle failure?
-}
-
 $opStatus = "SUCCESS";
-if ($totalHosts > 0) {
-  if ($successfulHosts == 0) {
-    $opStatus = "TOTALFAILURE";
-  } else if ($failedHosts > 0) {
-    $opStatus = "FAILED";
-  }
-}
 $logger->log_info("Puppet finalize, succeeded for " . $successfulHosts
   . " and failed for " . $failedHosts . " of total " . $totalHosts . " hosts");
 

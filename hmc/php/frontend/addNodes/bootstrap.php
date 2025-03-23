@@ -44,7 +44,7 @@ include_once "../util/YumRepoConfigParser.php";
     $usingLocalRepo = $repo['usingLocalRepo'];
     $gpgKeyFiles = $repo['gpgKeyFiles'];
 
-    exec ("/etc/init.d/iptables stop");
+    // exec ("/etc/init.d/iptables stop");
     $logger->log_info("List of hosts to BootStrap ".json_encode($hosts));
     $logger->log_info("Run script for pdsh ".$rscript);
     $scpCmd = "scp -o StrictHostKeyChecking=no ";
@@ -75,9 +75,7 @@ include_once "../util/YumRepoConfigParser.php";
       $remoteGpgKeyPaths .= $dFile;
     }
 
-    $rcmd = "/tmp/puppet_agent_install.sh --puppet-master=" . $master
-        . " --repo-file=" . $remoteRepoFilePath
-        . " --gpg-key-files=" . $remoteGpgKeyPaths;
+    $rcmd = "/tmp/no_agent_install.sh";
 
     if ("true" == strtolower($usingLocalRepo)) {
         $rcmd .= " --using-local-repo ";
@@ -124,7 +122,7 @@ if ($subTransactionReturnValue["result"] != 0 ) {
 
 $sshkey = getSshKeyFilePath($clusterName);
 // $rscript = "/var/www/html/KickAssHDPUI/ShellScripts/puppet_agent_install.sh";
-$rscript = realpath("../../ShellScripts/puppet_agent_install.sh");
+$rscript = realpath("../../ShellScripts/no_agent_install.sh");
 
 $repository=array();
 $configs = $dbAccessor->getServiceConfig($clusterName);

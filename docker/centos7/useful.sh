@@ -25,3 +25,15 @@ wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/mas
 
 # 查看docker容器使用资源情况
 docker stats 
+
+
+# 启动docker compose 需要做如下命令
+
+docker compose exec -it master /bin/bash
+docker compose exec -it worker01 /bin/bash
+docker compose exec -it worker02 /bin/bash
+
+# 分别执行如下
+yum install -y openssh-clients openssh-server
+/usr/bin/ssh-keygen -A
+systemctl start sshd

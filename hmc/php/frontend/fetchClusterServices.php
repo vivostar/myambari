@@ -166,7 +166,8 @@ if ($getConfigs == "true") {
     } else { // success case we found the configured properties.
       $dynamicConfigTable = $dynamicConfigTableResult["properties"];
       foreach ($staticConfigProps["configs"] as $key => $propInfo) {
-        $serviceName = $propInfo["serviceName"];
+        
+        // $logger->log_info("services_name: \n" . print_r($services, true));
         // if service specific config needs to be passed back,
         // bypass all other services.
         if (($forService !== "all") && ($forService !== $serviceName)) {
@@ -176,8 +177,10 @@ if ($getConfigs == "true") {
         $logger->log_debug("Service static config $serviceName keys ".
         json_encode($key));
          */
-        if (!array_key_exists("properties", $services[$serviceName])) {
-          $services[$serviceName]["properties"] = array();
+        if (array_key_exists($serviceName, $services)) {
+          if (!array_key_exists("properties", $services[$serviceName])) {
+            $services[$serviceName]["properties"] = array();
+          }
         }
 
         if (isset($dynamicConfigTable[$key])) {

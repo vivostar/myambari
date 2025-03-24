@@ -126,13 +126,6 @@ class HMCDBAccessor {
       LockRelease(); return $response;
     }
     $result = $pdoStmt->fetchAll(PDO::FETCH_BOTH);
-    
-    // TODO 此处可能需要优化
-    $this->logger->log_info("result: $result");
-    $demo_state = $result[0][0];
-    $demo_state_type = gettype($demo_state);
-    $this->logger->log_info("demo_state type: $demo_state_type");
-    $this->logger->log_info("demo_state: $demo_state");
     if (isset($result) && is_array($result) && count($result) == 1) {
       $response["state"] = $result[0]["state"];
       LockRelease(); return $response;

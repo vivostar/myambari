@@ -144,27 +144,14 @@ $outjson = array(
                                                                     "suffix" => "hadoop/hdfs/namesecondary"
                                                                     )
                                             ),
-                                "MAPREDUCE" => array(
-                                             "mapred_local_dir" => array(
+                                "YARN" => array(
+                                             "yarn_local_dir" => array(
                                                                     "displayName" => "MapReduce Data Directories",
                                                                     "maxDirectoriesNeeded" => -1,
                                                                     "suffix" => "hadoop/mapred"
                                                                     ),
                                             ),
-                                "OOZIE" => array(
-                                             "oozie_data_dir" => array(
-                                                                    "displayName" => "Oozie DB Directory",
-                                                                    "maxDirectoriesNeeded" => 1,
-                                                                    "suffix" => "hadoop/oozie"
-                                                                   ),
-                                            ),
-                                "ZOOKEEPER" => array(
-                                             "zk_data_dir" => array(
-                                                                    "displayName" => "ZooKeeper Data Directory",
-                                                                    "maxDirectoriesNeeded" => 1,
-                                                                    "suffix" => "hadoop/zookeeper"
-                                                                  ),
-                                           ),
+                              
                                 ),
             );
 

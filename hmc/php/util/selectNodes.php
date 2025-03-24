@@ -271,7 +271,7 @@ class SelectNodes {
       return $return;
     }
     $clusterState = json_decode($clusterInfo["state"],true);
-    if($clusterState[state] == "CONFIGURATION_IN_PROGRESS") {
+    if($clusterState["state"] == "CONFIGURATION_IN_PROGRESS") {
       $hostRolesResult = $db->cleanAllHostRoles($clusterName);
       if ($hostRolesResult["result"] != 0) {
         $this->logger->log_error("Issue cleaning all host roles ".$hostRolesResult["error"]);

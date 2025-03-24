@@ -86,7 +86,8 @@ function ConfigureServicesUtil() {
     var optionsSummary = (isReconfigure) ? '<div>': '<div class="tab-content">';
 
     var setServiceMarkup = function(service) {
-      if (service.isEnabled === '1') {
+      // console.log(1 === '1');
+      if (service.isEnabled === 1) {
         var serviceNeedsRender = false;
         var propertiesMarkup = "";
         for (var property in service.properties) {

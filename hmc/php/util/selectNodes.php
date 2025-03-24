@@ -78,6 +78,16 @@ class SelectNodes {
   }
 
   /**
+   * Helper function to add ResourceMananger.
+   */
+  function addResourceMananger($serviceInfo, $result, $hostInfo) {
+    if (array_key_exists("YARN", $serviceInfo)) {
+      $result["mastersToHosts"]["RESOURCEMANAGER"] = $this->createHostMap($hostInfo);
+    }
+    return $result;
+  }
+
+  /**
    * Helper function to add HBase Master.
    */
   function addHBaseMaster($serviceInfo, $result, $hostInfo) {
@@ -152,7 +162,7 @@ class SelectNodes {
    * Adds all the slaves to the hostlist given whats enabled
    */
   function addSlaves($db, $hostlist, $clusterName, $services, $gangliaMaster) {
-    $db->addHostsToComponent($clusterName, "TASKTRACKER", $hostlist, "ASSIGNED", "");
+    $db->addHostsToComponent($clusterName, "NODEMANAGER", $hostlist, "ASSIGNED", "");
     $db->addHostsToComponent($clusterName, "DATANODE", $hostlist, "ASSIGNED", "");
     if (array_key_exists("HBASE", $services)) {
       $db->addHostsToComponent($clusterName, "HBASE_REGIONSERVER", $hostlist, "ASSIGNED", "");
@@ -207,7 +217,7 @@ class SelectNodes {
       /* all slaves except for the namenode/JT/Hbase master */
       $excludeHosts = array();
       array_push($excludeHosts, $masterToHost["NAMENODE"][0]);
-      array_push($excludeHosts, $masterToHost["JOBTRACKER"][0]);
+      array_push($excludeHosts, $masterToHost["RESOURCEMANAGER"][0]);
       if (array_key_exists("HBASE", $services)) {
         array_push($excludeHosts, $masterToHost["HBASE_MASTER"][0]);
       }
@@ -399,7 +409,7 @@ class SelectNodes {
     if ( $numNodes == 1 ) {
       $result = $this->addNameNode($services, $result, $allHostsInfo[0]);
       $result = $this->addSNameNode($services, $result, $allHostsInfo[0]);
-      $result = $this->addJobTracker($services, $result, $allHostsInfo[0]);
+      $result = $this->addResourceMananger($services, $result, $allHostsInfo[0]);
       $result = $this->addHBaseMaster($services, $result, $allHostsInfo[0]);
       $result = $this->addOozieServer($services, $result, $allHostsInfo[0]);
       $result = $this->addHiveServer($services, $result, $allHostsInfo[0]);
@@ -412,7 +422,7 @@ class SelectNodes {
     if ( $numNodes < 3) {
       $result = $this->addNameNode($services, $result, $allHostsInfo[0]);
       $result = $this->addSNameNode($services, $result, $allHostsInfo[1]);
-      $result = $this->addJobTracker($services, $result, $allHostsInfo[1]);
+      $result = $this->addResourceMananger($services, $result, $allHostsInfo[1]);
       $result = $this->addHBaseMaster($services, $result, $allHostsInfo[0]);
       $result = $this->addOozieServer($services, $result, $allHostsInfo[1]);
       $result = $this->addHiveServer($services, $result, $allHostsInfo[1]);
@@ -425,7 +435,7 @@ class SelectNodes {
     if ( $numNodes <= 5) {
       $result = $this->addNameNode($services, $result, $allHostsInfo[0]);
       $result = $this->addSNameNode($services, $result, $allHostsInfo[1]);
-      $result = $this->addJobTracker($services, $result, $allHostsInfo[1]);
+      $result = $this->addResourceMananger($services, $result, $allHostsInfo[1]);
       $result = $this->addHBaseMaster($services, $result, $allHostsInfo[0]);
       $result = $this->addOozieServer($services, $result, $allHostsInfo[1]);
       $result = $this->addHiveServer($services, $result, $allHostsInfo[1]);
@@ -441,7 +451,7 @@ class SelectNodes {
     if ( $numNodes <= 30) {
       $result = $this->addNameNode($services, $result, $allHostsInfo[0]);
       $result = $this->addSNameNode($services, $result, $allHostsInfo[1]);
-      $result = $this->addJobTracker($services, $result, $allHostsInfo[1]);
+      $result = $this->addResourceMananger($services, $result, $allHostsInfo[1]);
       $result = $this->addHBaseMaster($services, $result, $allHostsInfo[2]);
       $result = $this->addOozieServer($services, $result, $allHostsInfo[2]);
       $result = $this->addHiveServer($services, $result, $allHostsInfo[2]);
@@ -456,7 +466,7 @@ class SelectNodes {
     if ( $numNodes > 30) {
       $result = $this->addNameNode($services, $result, $allHostsInfo[0]);
       $result = $this->addSNameNode($services, $result, $allHostsInfo[1]);
-      $result = $this->addJobTracker($services, $result, $allHostsInfo[2]);
+      $result = $this->addResourceMananger($services, $result, $allHostsInfo[2]);
       $result = $this->addHBaseMaster($services, $result, $allHostsInfo[3]);
       $result = $this->addOozieServer($services, $result, $allHostsInfo[3]);
       $result = $this->addHiveServer($services, $result, $allHostsInfo[4]);

@@ -170,34 +170,37 @@ if ($getConfigs == "true") {
         // $logger->log_info("services_name: \n" . print_r($services, true));
         // if service specific config needs to be passed back,
         // bypass all other services.
-        if (($forService !== "all") && ($forService !== $serviceName)) {
-          continue;
-        }
-        /*
-        $logger->log_debug("Service static config $serviceName keys ".
-        json_encode($key));
-         */
-        if (array_key_exists($serviceName, $services)) {
-          if (!array_key_exists("properties", $services[$serviceName])) {
-            $services[$serviceName]["properties"] = array();
+        foreach( $allServicesInfo['services'] as $serviceName => $serviceInfo ) {
+          if (($forService !== "all") && ($forService !== $serviceName)) {
+            continue;
+          }
+          /*
+          $logger->log_debug("Service static config $serviceName keys ".
+          json_encode($key));
+          */
+          if (array_key_exists($serviceName, $services)) {
+            if (!array_key_exists("properties", $services[$serviceName])) {
+              $services[$serviceName]["properties"] = array();
+            }
+          }
+  
+          if (isset($dynamicConfigTable[$key])) {
+            $value = $dynamicConfigTable[$key];
+            // $logger->log_debug("$value from service config for $key");
+          } else {
+            $value = $propInfo["value"];
+          }
+          if ($propInfo["serviceName"] == $serviceName) {
+            $services[$serviceName]["properties"][$key] = array(
+                "displayName" => $propInfo["displayName"],
+                "description" => $propInfo["description"],
+                "type" => $propInfo["displayType"],
+                "unit" => (isset($propInfo["displayAttributes"]["unit"]) ? $propInfo["displayAttributes"]["unit"] : null),
+                "value" => $value,
+                "displayAttributes" => $propInfo["displayAttributes"]
+              );
           }
         }
-
-        if (isset($dynamicConfigTable[$key])) {
-          $value = $dynamicConfigTable[$key];
-          // $logger->log_debug("$value from service config for $key");
-        } else {
-          $value = $propInfo["value"];
-        }
-
-        $services[$serviceName]["properties"][$key] = array(
-            "displayName" => $propInfo["displayName"],
-            "description" => $propInfo["description"],
-            "type" => $propInfo["displayType"],
-            "unit" => (isset($propInfo["displayAttributes"]["unit"]) ? $propInfo["displayAttributes"]["unit"] : null),
-            "value" => $value,
-            "displayAttributes" => $propInfo["displayAttributes"]
-          );
       }
     }
   }

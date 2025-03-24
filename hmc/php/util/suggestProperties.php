@@ -255,7 +255,7 @@ class SuggestProperties {
     $result["configs"]["namenode_heapsize"] = $nnHeap;
 
     /* suggest the jt heap size */
-    $jtHeap = $this->allocateHeapSizeForDaemon("JOBTRACKER", $hostRoles,
+    $jtHeap = $this->allocateHeapSizeForDaemon("RESOURCEMANAGER", $hostRoles,
         $hostInfoMap, $allHostsToComponents, FALSE);
     $result["configs"]["jtnode_heapsize"] = $jtHeap;
 
@@ -273,9 +273,9 @@ class SuggestProperties {
 
     // TODO fix - this should be based on heap size divided by max task
     // limit on the host
-    $heapSize = $this->allocateHeapSizeForDaemon("TASKTRACKER", $hostRoles,
+    $heapSize = $this->allocateHeapSizeForDaemon("NODEMANAGER", $hostRoles,
         $hostInfoMap, $allHostsToComponents, TRUE);
-    $heapSizeWithMax = $this->allocateHeapSizeWithMax("TASKTRACKER", $hostRoles,
+    $heapSizeWithMax = $this->allocateHeapSizeWithMax("NODEMANAGER", $hostRoles,
         $hostInfoMap, $allHostsToComponents, TRUE, 2048);
     $this->logger->log_info("Maxed Heap Size for MR Child opts ".$heapSizeWithMax);
     $result["configs"]["mapred_child_java_opts_sz"] = $heapSizeWithMax;
@@ -424,10 +424,10 @@ class SuggestProperties {
 
     $memProps = array (
         "namenode_heapsize" => array ( "role" => "NAMENODE", "32bit" => FALSE),
-        "jtnode_heapsize" => array ( "role" => "JOBTRACKER", "32bit" => FALSE),
+        "jtnode_heapsize" => array ( "role" => "RESOURCEMANAGER", "32bit" => FALSE),
         "dtnode_heapsize" => array ( "role" => "DATANODE", "32bit" => TRUE),
         "hadoop_heapsize" => array ( "role" => "DATANODE", "32bit" => TRUE),
-        "mapred_child_java_opts_sz" => array ( "role" => "TASKTRACKER", "32bit" => TRUE)
+        "mapred_child_java_opts_sz" => array ( "role" => "NODEMANAGER", "32bit" => TRUE)
       );
 
     if (array_key_exists("HBASE", $services)) {

@@ -37,3 +37,7 @@ docker compose exec -it worker02 /bin/bash
 yum install -y openssh-clients openssh-server
 /usr/bin/ssh-keygen -A
 systemctl start sshd
+
+# install jdk
+
+yum install -y java-1.8.0-openjdk-devel
